@@ -1,7 +1,6 @@
 import ipaddress
 
 import requests
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.shortcuts import redirect
@@ -12,6 +11,7 @@ from ip2location05app.forms.UploadFileForm import UploadFileForm
 from ip2location05app.models.FileInput import FileInput
 from ip2location05app.models.IPAddress import IPAddress
 from ip2location05app.models.Result import Result
+from ip2location05app.views.BaseView import BaseView
 
 
 def is_valid_ipaddress(sample_str):
@@ -25,9 +25,10 @@ def is_valid_ipaddress(sample_str):
     return result
 
 
-class FileSubmitView(LoginRequiredMixin, FormView):
+class FileSubmitView(BaseView, FormView):
     form_class = UploadFileForm
     template_name = 'file_submit.html'
+    view_name = 'Submit file contains list IPs'
 
     # def get_initial(self):
     #     initial = super(FileSubmitView, self).get_initial()
@@ -60,7 +61,6 @@ class FileSubmitView(LoginRequiredMixin, FormView):
             for ip in ip_addresses:
                 response = requests.get(api_configuration.get_api_link(ip.address))
                 # response.json()
-                print(response.json()['response'])
                 result = Result.objects.create(
                     response_string=response.content.decode('utf-8'),
                     address=ip,

@@ -1,0 +1,20 @@
+{% extends "base_general.html" %}
+{% load static %}
+{% block page_content %}
+
+        <div class="row card">
+            <div class="container card-body form-builder">
+                <div class="row mb-4">
+                    <div class="col-sm-6 " id="column_1_content">
+                        {% block column_1_content %}
+                        {% endblock %}
+                    </div>
+                    <div class="col-sm-6" style="" id="column_2_content">
+                        {% block column_2_content %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

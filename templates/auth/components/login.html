@@ -1,0 +1,50 @@
+ {% load static %} {% load sass_tags %}
+ <!-- login page start-->
+ <section>         
+  <div class="container-fluid p-0">
+    <div class="row">
+      <div class="col-12">
+        <div class="login-card">
+          <form class="theme-form login-form" method="post">
+            <h4>Đăng nhập</h4>
+            <h6>Xin vui lòng đăng nhập để truy cập hệ thống</h6>
+            {% csrf_token %}
+            {{ form }}
+            {% if request.GET.next%}
+            <input type="hidden" name="next" value="{{request.GET.next}}">
+            {% endif %}
+            <!-- <div class="form-group">
+              <label>Email Address</label>
+              <div class="input-group"><span class="input-group-text"><i class="icon-email"></i></span>
+                <input class="form-control" type="text" required="" placeholder="Test@gmail.com">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <div class="input-group"><span class="input-group-text"><i class="icon-lock"></i></span>
+                <input class="form-control" type="password" name="login[password]" required="" placeholder="*********">
+                <div class="show-hide"><span class="show">                         </span></div>
+              </div>
+            </div> -->
+            <div class="form-group">
+              <button class="btn btn-primary btn-block" type="submit">Đăng nhập</button>
+            </div>
+            <!-- <div class="login-social-title">                
+              <h5>Sign in with</h5>
+            </div>
+            <div class="form-group">
+              <ul class="login-social">
+                <li><a href="https://www.linkedin.com/login" target="_blank"><i data-feather="linkedin"></i></a></li>
+                <li><a href="https://twitter.com/" target="_blank"><i data-feather="twitter"></i></a></li>
+                <li><a href="https://www.facebook.com/" target="_blank"><i data-feather="facebook"></i></a></li>
+                <li><a href="https://www.instagram.com/login" target="_blank"><i data-feather="instagram">                  </i></a></li>
+              </ul>
+            </div> -->
+{#            <p>Don't have account?<a class="ms-2" href="/sign_up">Create Account</a></p>#}
+            <p>Xin vui lòng liên hệ quản trị hệ thống nếu chưa có tài khoản hoặc quên mật khẩu.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

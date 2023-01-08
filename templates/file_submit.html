@@ -1,5 +1,12 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base_general.html' %}
+{% load static %} {% load sass_tags %}
+{% block css_block %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/select2.scss' %}">
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/datatables.scss' %}">
+{% endblock %}
+
+{% block page_content %}
 
     <form method="POST" enctype="multipart/form-data" action="{% url 'file_submit' %}">
 
@@ -12,4 +19,9 @@
         <input type="submit" value="Submit">
     </form>
 
+{% endblock %}
+{% block plugin_js_block %}
+    {{ block.super }}
+    <script src="{% static 'assets/js/select2/select2.full.min.js' %}"></script>
+    <script src="{% static 'assets/js/select2/select2-custom.js' %}"></script>
 {% endblock %}

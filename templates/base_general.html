@@ -1,0 +1,64 @@
+{% extends "base_site.html" %} {% load static %} {% load sass_tags %}
+
+{% block content %}
+<div class="page-body">
+    <div class="container-fluid">
+    <div class="page-header">
+        <div class="row">
+            {% block page_content_header %}
+            <div class="col-sm-6">
+                <h3>
+                    {% block page_content_view_name %}
+                    {{ view_name|default:"Default View Nameee" }}
+                    {% endblock %}
+                </h3>
+{#                <h3>{{breadcrumb.child}}</h3>#}
+{#                <ol class="breadcrumb">#}
+{#                    <li class="breadcrumb-item"><a href="/default">Home</a></li>#}
+{#                    <li class="breadcrumb-item">{{breadcrumb.parent}}</li>#}
+{#                    <li class="breadcrumb-item active">{{breadcrumb.child}}</li>#}
+{#                </ol>#}
+            </div>
+            <div class="col-sm-6">
+                <!-- Bookmark Start-->
+                <div class="bookmark">
+                    {% block bookmark %}
+                    <ul>
+                        <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                        <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                        <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                        <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                        <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                            <form class="form-inline search-form">
+                                <div class="form-group form-control-search">
+                                    <input type="text" placeholder="Search..">
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                    {% endblock %}
+                </div>
+                <!-- Bookmark Ends-->
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+</div>
+    <div class="container-fluid general-widget">
+        {% block page_content %}
+{#        <div class="row">#}
+{#            {% include "general/widgets/general/section1.html" %} #}
+{#            {% include "general/widgets/general/section2.html" %}#}
+{#            {% include "general/widgets/general/section3.html" %} #}
+{#            {% include "general/widgets/general/section4.html" %}#}
+{#            {% include "general/widgets/general/section5.html"%}#}
+{#            {% include "general/widgets/general/section6.html" %} #}
+{#            {% include "general/widgets/general/section7.html" %}#}
+{#            {% include "general/widgets/general/section8.html" %}#}
+{##}
+{#        </div>#}
+        {% endblock %}
+
+    </div>
+</div>
+{% endblock %}

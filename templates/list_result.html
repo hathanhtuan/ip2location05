@@ -1,33 +1,81 @@
-{% extends 'base.html' %}
-{% block style %}
-    <style>
-        table, th, td {
-            border: 1px solid;
-        }
-    </style>
+{% extends 'base_general.html' %}
+
+{% load static %} {% load sass_tags %}
+{% block css_block %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/datatables.scss' %}">
 {% endblock %}
-{% block content %}
-    <table id="list_result" class="display" style="border: 1px solid; ">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>IP</th>
-            <th>API Configuration</th>
-            <th>Result</th>
-        </tr>
-        </thead>
-        <tbody>
+{% block page_content %}
+    <div class="row card">
+        <div class="container card-body form-builder">
+            <table id="list_result" class="display" style="width:100%">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>IP</th>
+                    <th>API Configuration</th>
+                    <th>Check time</th>
+                    <th>Result</th>
+                </tr>
+                </thead>
+                <tbody>
 
-        {% for result in object_list %}
-            <tr>
-                <td>{{ result.pk }}</td>
-                <td>{{ result.address }}</td>
-                <td>{{ result.api_configuration }}</td>
-                <td>{{ result.response_string }}</td>
-            </tr>
-        {% endfor %}
+                {% for result in object_list %}
+                    <tr>
+                        <td>{{ result.pk }}</td>
+                        <td>{{ result.address }}</td>
+                        <td>{{ result.api_configuration }}</td>
+                        <td>{{ result.created_at }}</td>
+                        <td>{{ result.response_string }}</td>
+                    </tr>
+                {% endfor %}
 
-        </tbody>
+                </tbody>
 
-    </table>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+{% block plugin_js_block %}
+    {{ block.super }}
+    <script src="{% static 'assets/js/script.js' %}"></script>
+    <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/js/datatable/datatables/datatable.custom.js' %}"></script>
+{% endblock %}
+{% block page_js %}
+    {{ block.super }}
+    <script>
+
+
+        $(document).ready(function () {
+            t = $('#list_result').DataTable({
+                columnDefs: [
+                    {
+                        searchable: false,
+                        orderable: false,
+                        targets: 0,
+                    },
+                ],
+                "columns": [
+                    null,
+                    null,
+                    null,
+                    null,
+                ],
+                order: [[0, 'desc']],
+            });
+            t.on('order.dt search.dt', function () {
+                let i = 1;
+
+                t.cells(null, 0, {search: 'applied', order: 'applied'}).every(function (cell) {
+                    this.data(i++);
+                });
+            }).draw();
+
+            // filter_type_check($('input[name="filter_type"]').val());
+        });
+
+
+    </script>
 {% endblock %}

@@ -1,0 +1,11 @@
+<div class="col-sm-12 col-xl-12">
+    <div class="card">
+        <div class="card-header pb-0">
+            <h5>{% block card_name %} {{ card_name | default:"Default Card Name" }} {% endblock %}</h5>
+        </div>
+        <div class="card-body">
+            {% block card_body %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
