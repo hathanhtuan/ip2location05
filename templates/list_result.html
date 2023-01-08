@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block style %}
+    <style>
+        table, th, td {
+            border: 1px solid;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <table id="list_result" class="display" style="border: 1px solid; ">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>IP</th>
+            <th>API Configuration</th>
+            <th>Result</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for result in object_list %}
+            <tr>
+                <td>{{ result.pk }}</td>
+                <td>{{ result.address }}</td>
+                <td>{{ result.api_configuration }}</td>
+                <td>{{ result.response_string }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+{% endblock %}
