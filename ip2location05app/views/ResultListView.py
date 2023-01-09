@@ -13,6 +13,6 @@ class ResultListView(BaseView, ListView):
         file_id = self.request.GET.get('file_id', False)
         file_id = int(file_id)
         if file_id:
-            return Result.objects.filter(address__fileinput=file_id, created_by=self.request.user)
+            return Result.objects.filter(fileinput=file_id, created_by=self.request.user)
         else:
             return Result.objects.none()

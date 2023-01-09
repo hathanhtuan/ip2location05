@@ -5,6 +5,9 @@
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/datatables.scss' %}">
 {% endblock %}
+{% block bookmark %}
+    {% include 'include/bookmark_list.html' %}
+{% endblock %}
 {% block page_content %}
     <div class="row card">
         <div class="container card-body form-builder">
@@ -38,6 +41,7 @@
     <script src="{% static 'assets/js/script.js' %}"></script>
     <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'assets/js/datatable/datatables/datatable.custom.js' %}"></script>
+    <script src="{% static 'assets/js/sheetjs.js' %}"></script>
 {% endblock %}
 {% block page_js %}
     {{ block.super }}
@@ -73,4 +77,5 @@
 
 
     </script>
+    {% include 'include/script_export_to_excel.html' with table_id='list_result' %}
 {% endblock %}
