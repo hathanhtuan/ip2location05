@@ -6,8 +6,8 @@
       <div class="col-12">
         <div class="login-card">
           <form class="theme-form login-form" method="post">
-            <h4>Đăng nhập</h4>
-            <h6>Xin vui lòng đăng nhập để truy cập hệ thống</h6>
+            <h4>Login</h4>
+            <h6>Please login to access</h6>
             {% csrf_token %}
             {{ form }}
             {% if request.GET.next%}
@@ -27,7 +27,7 @@
               </div>
             </div> -->
             <div class="form-group">
-              <button class="btn btn-primary btn-block" type="submit">Đăng nhập</button>
+              <button class="btn btn-primary btn-block" type="submit">Login</button>
             </div>
             <!-- <div class="login-social-title">                
               <h5>Sign in with</h5>
@@ -41,7 +41,7 @@
               </ul>
             </div> -->
 {#            <p>Don't have account?<a class="ms-2" href="/sign_up">Create Account</a></p>#}
-            <p>Xin vui lòng liên hệ quản trị hệ thống nếu chưa có tài khoản hoặc quên mật khẩu.</p>
+            <p>Please contact admin if you don't have an account or forgot password.</p>
           </form>
         </div>
       </div>

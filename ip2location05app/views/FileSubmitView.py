@@ -31,7 +31,7 @@ class FileSubmitView(BaseIPCheckView):
         with transaction.atomic():
             for f in files:
                 file_name = str(f)
-                file_input = FileInput.objects.create(file_name=file_name)
+                file_input = FileInput.objects.create(file_name=file_name, created_by=self.request.user)
                 file_input.save()
                 for line in f:
                     line = line.rstrip().decode("utf-8")
@@ -49,7 +49,9 @@ class FileSubmitView(BaseIPCheckView):
         api_configuration = form.cleaned_data['api_configuration']
         if file_input and api_configuration:
             for ip in ip_addresses:
-                self.check_ip(ip, api_configuration, self.request.user)
+                result = self.check_ip(ip, api_configuration, self.request.user)
+                file_input.results.add(result)
+                result.save()
             return redirect(reverse('result_list') + '?file_id=' + str(file_input.pk))
         else:
             return redirect('result_list')

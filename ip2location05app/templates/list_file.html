@@ -12,21 +12,17 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>IP</th>
-                    <th>API Configuration</th>
+                    <th>File</th>
                     <th>Check time</th>
-                    <th>Result</th>
                 </tr>
                 </thead>
                 <tbody>
 
-                {% for result in object_list %}
+                {% for file in object_list %}
                     <tr>
-                        <td>{{ result.pk }}</td>
-                        <td><a href="{% url 'history_ip' %}?ip={{ result.address }}">{{ result.address }}</a></td>
-                        <td>{{ result.api_configuration }}</td>
-                        <td>{{ result.created_at }}</td>
-                        <td>{{ result.response_string | show_country }}</td>
+                        <td>{{ file.pk }}</td>
+                        <td><a href="{% url 'history_ip' %}?file={{ file.pk }}">{{ file.file_name }}</a></td>
+                        <td>{{ file.created_at }}</td>
                     </tr>
                 {% endfor %}
 
@@ -58,7 +54,6 @@
                     },
                 ],
                 "columns": [
-                    null,
                     null,
                     null,
                     null,
