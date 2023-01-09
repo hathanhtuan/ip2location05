@@ -20,12 +20,13 @@ class BaseIPCheckView(BaseView, FormView):
         return result
 
     @staticmethod
-    def check_ip(ip, api_configuration):
+    def check_ip(ip, api_configuration, check_by_user):
         response = requests.get(api_configuration.get_api_link(ip.address))
         result = Result.objects.create(
             response_string=response.content.decode('utf-8'),
             address=ip,
-            api_configuration=api_configuration
+            api_configuration=api_configuration,
+            created_by=check_by_user
         )
         result.save()
         return result

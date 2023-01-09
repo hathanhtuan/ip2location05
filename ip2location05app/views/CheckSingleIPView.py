@@ -20,7 +20,7 @@ class CheckSingleIPView(BaseIPCheckView):
         else:
             ip = IPAddress.objects.create(address=ip_text)
 
-        result = self.check_ip(ip, api_configuration)
+        result = self.check_ip(ip, api_configuration, self.request.user)
         context = form.get_context()
         context['result'] = result
 
