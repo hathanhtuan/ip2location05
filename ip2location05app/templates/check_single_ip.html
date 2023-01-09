@@ -1,0 +1,32 @@
+{% extends 'base_general.html' %}
+{% load static %} {% load sass_tags %} {% load extras %}
+{% block css_block %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/select2.scss' %}">
+{% endblock %}
+
+{% block page_content %}
+
+    <form method="POST" enctype="multipart/form-data">
+
+        <!-- Security token -->
+        {% csrf_token %}
+
+        <!-- Using the formset -->
+        {{ form.as_p }}
+
+        <input type="submit" value="Submit">
+    </form>
+    {% if result %}
+        <p>
+            <b>RESULT:</b> {{ result.response_string | show_country }}
+        </p>
+
+    {% endif %}
+
+{% endblock %}
+{% block plugin_js_block %}
+    {{ block.super }}
+    <script src="{% static 'assets/js/select2/select2.full.min.js' %}"></script>
+    <script src="{% static 'assets/js/select2/select2-custom.js' %}"></script>
+{% endblock %}

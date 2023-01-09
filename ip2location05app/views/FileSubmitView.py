@@ -11,21 +11,11 @@ from ip2location05app.forms.UploadFileForm import UploadFileForm
 from ip2location05app.models.FileInput import FileInput
 from ip2location05app.models.IPAddress import IPAddress
 from ip2location05app.models.Result import Result
+from ip2location05app.views.BaseIPCheckView import BaseIPCheckView
 from ip2location05app.views.BaseView import BaseView
 
 
-def is_valid_ipaddress(sample_str):
-    """ Returns True if given string is a
-        valid IP Address, else returns False"""
-    result = True
-    try:
-        ipaddress.ip_network(sample_str)
-    except:
-        result = False
-    return result
-
-
-class FileSubmitView(BaseView, FormView):
+class FileSubmitView(BaseIPCheckView):
     form_class = UploadFileForm
     template_name = 'file_submit.html'
     view_name = 'Submit file contains list IPs'
@@ -46,7 +36,7 @@ class FileSubmitView(BaseView, FormView):
                 for line in f:
                     line = line.rstrip().decode("utf-8")
                     ipt = str(line)
-                    if not is_valid_ipaddress(ipt):
+                    if not self.is_valid_ipaddress(ipt):
                         raise ValidationError('IP Address is not valid {}'.format(ipt))
                     if IPAddress.objects.filter(address=ipt).exists():
                         ip = IPAddress.objects.filter(address=ipt).first()
@@ -59,14 +49,7 @@ class FileSubmitView(BaseView, FormView):
         api_configuration = form.cleaned_data['api_configuration']
         if file_input and api_configuration:
             for ip in ip_addresses:
-                response = requests.get(api_configuration.get_api_link(ip.address))
-                # response.json()
-                result = Result.objects.create(
-                    response_string=response.content.decode('utf-8'),
-                    address=ip,
-                    api_configuration=api_configuration
-                )
-                result.save()
+                self.check_ip(ip, api_configuration)
             return redirect(reverse('result_list') + '?file_id=' + str(file_input.pk))
         else:
             return redirect('result_list')

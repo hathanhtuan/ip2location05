@@ -121,7 +121,7 @@ STATICFILES_FINDERS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATICFILES_DIRS = [BASE_DIR / 'templates/static']
+STATICFILES_DIRS = [BASE_DIR / 'ip2location05app/templates/static']
 
 STATIC_URL = 'static/'
 

@@ -1,6 +1,6 @@
 {% extends 'base_general.html' %}
 
-{% load static %} {% load sass_tags %}
+{% load static %} {% load sass_tags %} {% load extras %}
 {% block css_block %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/datatables.scss' %}">
@@ -26,7 +26,7 @@
                         <td>{{ result.address }}</td>
                         <td>{{ result.api_configuration }}</td>
                         <td>{{ result.created_at }}</td>
-                        <td>{{ result.response_string }}</td>
+                        <td>{{ result.response_string | show_country }}</td>
                     </tr>
                 {% endfor %}
 

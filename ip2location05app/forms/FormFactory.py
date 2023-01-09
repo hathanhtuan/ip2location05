@@ -91,3 +91,14 @@ def file_field(label, multiple=True, required=False):
     )
 
 
+def ip_address_field(label, required=False):
+    return forms.GenericIPAddressField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control btn-square mb-2'
+            }
+        ),
+        required=required
+    )
+
+
