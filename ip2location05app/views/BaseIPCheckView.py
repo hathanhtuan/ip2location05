@@ -24,13 +24,17 @@ class BaseIPCheckView(BaseView, FormView):
 
     @staticmethod
     def check_ip(ip, api_configuration, check_by_user):
-        latest_result = Result.objects.filter(address__address=ip.address).order_by('-created_at').first()
+        latest_result = Result.objects.filter(
+            address__address=ip.address, api_configuration=api_configuration
+        ).order_by('-created_at').first()
         use_cache = True
         result = None
         if latest_result is not None:
             days_delta = datetime.now().date() - latest_result.created_at.date()
             if days_delta.days >= settings.API_CACHE_PERIOD_DAYS:
                 use_cache = False
+        else:
+            use_cache = False
 
         if use_cache:
             result = latest_result
