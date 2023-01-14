@@ -1,5 +1,6 @@
 
 import ipaddress
+import logging
 from datetime import datetime
 
 import requests
@@ -8,6 +9,8 @@ from django.views.generic import FormView
 from ip2location05 import settings
 from ip2location05app.models.Result import Result
 from ip2location05app.views.BaseView import BaseView
+
+logger = logging.getLogger(__name__)
 
 
 class BaseIPCheckView(BaseView, FormView):
@@ -40,6 +43,9 @@ class BaseIPCheckView(BaseView, FormView):
             result = latest_result
         else:
             response = requests.get(api_configuration.get_api_link(ip.address))
+            logger.info('check ip {} with api {} - response {}'
+                        .format(ip.address, api_configuration.get_api_link(ip.address), response.content)
+                        )
             result = Result.objects.create(
                 response_string=response.content.decode('utf-8'),
                 address=ip,

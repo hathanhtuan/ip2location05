@@ -137,3 +137,35 @@ LOGIN_REDIRECT_URL = "/app/upload"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 API_CACHE_PERIOD_DAYS = 1
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': 'C:\\Users\\ADMIN\\Documents\\web\\logs\\ip2location\\access.log',
+            'when': 'midnight',
+            'formatter': 'verbose',
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'loggers': {
+        'root': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+
+        },
+    },
+}
