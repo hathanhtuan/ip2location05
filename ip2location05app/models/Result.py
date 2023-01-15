@@ -10,6 +10,7 @@ class Result(TimestampMixin, CreatedByMixin):
     response_string = models.CharField(max_length=1000)
     address = models.ForeignKey(IPAddress, on_delete=models.CASCADE)
     api_configuration = models.ForeignKey(ApiConfiguration, on_delete=models.SET_NULL, blank=True, null=True)
+    checked = models.BooleanField(default=False)
 
     def __str__(self):
         return self.response_string

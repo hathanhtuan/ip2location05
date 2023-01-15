@@ -1,5 +1,6 @@
 
 import ipaddress
+import json
 import logging
 from datetime import datetime
 
@@ -26,10 +27,10 @@ class BaseIPCheckView(BaseView, FormView):
         return result
 
     @staticmethod
-    def check_ip(ip, api_configuration, check_by_user):
+    def create_or_get_cached_result(ip, api_configuration, check_by_user):
         latest_result = Result.objects.filter(
-            address__address=ip.address, api_configuration=api_configuration
-        ).order_by('-created_at').first()
+            address__address=ip.address, api_configuration=api_configuration, checked=True
+        ).order_by('-updated_at').first()
         use_cache = True
         result = None
         if latest_result is not None:
@@ -42,15 +43,37 @@ class BaseIPCheckView(BaseView, FormView):
         if use_cache:
             result = latest_result
         else:
+            logger.info('create unchecked result to check ip {} with api {}'
+                        .format(ip.address, api_configuration.get_api_link(ip.address))
+                        )
+            result = Result.objects.create(
+                response_string='',
+                address=ip,
+                api_configuration=api_configuration,
+                created_by=check_by_user,
+                checked=False
+            )
+            result.save()
+        return result
+
+    @staticmethod
+    def check_ip(ip, api_configuration, check_by_user, result=None):
+        if result is None:
+            result = BaseIPCheckView.create_or_get_cached_result(ip, api_configuration, check_by_user)
+        if result.checked:
+            return result
+        else:
             response = requests.get(api_configuration.get_api_link(ip.address))
             logger.info('check ip {} with api {} - response {}'
                         .format(ip.address, api_configuration.get_api_link(ip.address), response.content)
                         )
-            result = Result.objects.create(
-                response_string=response.content.decode('utf-8'),
-                address=ip,
-                api_configuration=api_configuration,
-                created_by=check_by_user
-            )
-            result.save()
+            result.response_string = response.content.decode('utf-8')
+            response_dict = json.loads(response.content)
+            if response_dict['response'] == 'OK':
+                result.checked = True
+            else:
+                result.checked = False
+
         return result
+
+

@@ -49,9 +49,14 @@ class FileSubmitView(BaseIPCheckView):
         api_configuration = form.cleaned_data['api_configuration']
         if file_input and api_configuration:
             for ip in ip_addresses:
-                result = self.check_ip(ip, api_configuration, self.request.user)
+                # result = self.check_ip(ip, api_configuration, self.request.user)
+                result = self.create_or_get_cached_result(ip, api_configuration, self.request.user)
                 file_input.results.add(result)
                 result.save()
+            for result in file_input.results.all():
+                if not result.checked:
+                    result = self.check_ip(result.address, api_configuration, self.request.user, result)
+                    result.save()
             return redirect(reverse('result_list') + '?file_id=' + str(file_input.pk))
         else:
             return redirect('result_list')
