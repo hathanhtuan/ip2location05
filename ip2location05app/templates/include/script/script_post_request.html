@@ -1,0 +1,14 @@
+
+
+    function {{ function_signature }}{
+        $.ajax({
+            url: '{% url request_path %}',
+            type: 'POST',
+            data : {csrfmiddlewaretoken: '{{ csrf_token }}', {{ request_key }}: {{ request_data }} },
+            {% if handle_success %}success: {{ handle_success }},{% endif %}
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    }
+

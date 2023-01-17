@@ -10,7 +10,11 @@ keys_list = ['country_name', 'region_name', 'city_name', 'isp', 'domain', 'mobil
 
 @register.filter
 def show_country(response_string):
-    result = json.loads(response_string)
+    result = None
+    try:
+        result = json.loads(response_string)
+    except:
+        return response_string
     display_text = ''
     if result['response'] == 'OK':
         # if 'country_name' in result:

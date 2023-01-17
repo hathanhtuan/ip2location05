@@ -73,7 +73,7 @@ class BaseIPCheckView(BaseView, FormView):
                 result.checked = True
             else:
                 result.checked = False
-
+            result.save()
         return result
 
 

@@ -19,6 +19,7 @@
                     <th>API Configuration</th>
                     <th>Check time</th>
                     <th>Result</th>
+                    <th>Status</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -29,7 +30,19 @@
                         <td><a href="{% url 'history_ip' %}?ip={{ result.address }}">{{ result.address }}</a></td>
                         <td>{{ result.api_configuration }}</td>
                         <td>{{ result.created_at }}</td>
-                        <td>{{ result.response_string | show_country }}</td>
+                        <td>
+                            <span id="result_text_{{ result.pk }}">{{ result.response_string | show_country }}</span>
+                        </td>
+                        <td>
+                            <span id="result_status_{{ result.pk }}">
+                            {% if result.checked %}
+                                CHECKED
+                            {% else %}
+                                <b>Failed</b> -
+                                <input type="button" value="Recheck" onclick="check_ip({{ result.pk }})">
+                            {% endif %}
+                            </span>
+                        </td>
                     </tr>
                 {% endfor %}
 
@@ -53,6 +66,7 @@
 
 
         $(document).ready(function () {
+
             t = $('#list_result').DataTable({
                 columnDefs: [
                     {
@@ -62,6 +76,8 @@
                     },
                 ],
                 "columns": [
+                    null,
+                    null,
                     null,
                     null,
                     null,
@@ -81,6 +97,19 @@
         });
 
 
+        {% include 'include/script/script_post_request.html' with function_signature='check_ip(result_id)' request_path='ajax_check_ip' request_key='result_id' request_data='result_id' handle_success='handle_recheck_ip'%}
+
+        function handle_recheck_ip(result){
+            var returned_data = result[0];
+            if(returned_data.status == 'CHECKED'){
+                $("#result_status_" + returned_data.result_id).html("CHECKED");
+                $("#result_text_" + returned_data.result_id).html(returned_data.display_result);
+            }
+            else {
+                alert("recheck failed!");
+            }
+        }
+
     </script>
-    {% include 'include/script_export_to_excel.html' with table_id='list_result' %}
+    {% include 'include/script/script_export_to_excel.html' with table_id='list_result' %}
 {% endblock %}
