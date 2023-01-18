@@ -31,3 +31,4 @@ class CheckSingleIPView(BaseIPCheckView):
         }
 
         return render(self.request, 'check_single_ip.html', context)
+

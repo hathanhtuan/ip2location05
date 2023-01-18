@@ -85,7 +85,8 @@ class GroupAccessByIPView(BaseIPCheckView):
         context = {
             'form': form,
             'result_list': result_list_with_api_check,
-            'view_name': self.view_name
+            'view_name': self.view_name,
+            'view': self
         }
 
         return render(self.request, 'group_access_by_ip.html', context)

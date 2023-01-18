@@ -15,3 +15,4 @@ class BaseView(LoginRequiredMixin, View):
         logger.info('user_access {} {} {}'.format(self.request.META['REMOTE_ADDR'], user, path))
         return super().dispatch(request, *args, **kwargs)
 
+

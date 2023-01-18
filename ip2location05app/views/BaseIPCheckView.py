@@ -15,6 +15,12 @@ logger = logging.getLogger(__name__)
 
 
 class BaseIPCheckView(BaseView, FormView):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['view_name'] = self.view_name
+        return context
+
     @staticmethod
     def is_valid_ipaddress(sample_str):
         """ Returns True if given string is a
