@@ -91,34 +91,34 @@
                                 <tr>
 
 
-                                    {% if time == v.0 %}
-                                        <td rowspan="{{ v | length }}">
-                                            <a href="{% url 'history_ip' %}?ip={{ key }}">{{ key }}</a>
+{#                                    {% if time == v.0 %}#}
+                                        <td >
+                                            {{ key }}
                                         </td>
-                                    {% endif %}
+{#                                    {% endif %}#}
                                     <td>
                                         {{ time |date:"H:i:s m/d/Y" }}
                                     </td>
-                                    {% if time == v.0 %}
-                                        <td rowspan="{{ v | length }}">
+{#                                    {% if time == v.0 %}#}
+                                        <td >
 
                                             {% if value.1.checked %}
                                                 {{ value.1.response_string | show_location }}
                                             {% endif %}
 
                                         </td>
-                                    {% endif %}
-                                    {% if time == v.0 %}
-                                        <td rowspan="{{ v | length }}">
+{#                                    {% endif %}#}
+{#                                    {% if time == v.0 %}#}
+                                        <td >
 
                                             {% if value.1.checked %}
                                                 {{ value.1.response_string | show_isp }}
                                             {% endif %}
 
                                         </td>
-                                    {% endif %}
-                                    {% if time == v.0 %}
-                                        <td rowspan="{{ v | length }}">
+{#                                    {% endif %}#}
+{#                                    {% if time == v.0 %}#}
+                                        <td >
 
                                             {% if value.1.checked %}
                                                 CHECKED
@@ -127,7 +127,7 @@
                                             {% endif %}
 
                                         </td>
-                                    {% endif %}
+{#                                    {% endif %}#}
                                 </tr>
                             {% endfor %}
                         {% endfor %}
@@ -149,6 +149,7 @@
     <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'assets/js/datatable/datatables/datatable.custom.js' %}"></script>
     <script src="{% static 'assets/js/sheetjs.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.table2excel.js' %}"></script>
 {% endblock %}
 {% block page_js %}
     {{ block.super }}
