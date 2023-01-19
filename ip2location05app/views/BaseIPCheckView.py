@@ -4,6 +4,7 @@ import json
 import logging
 from datetime import datetime
 
+import pytz
 import requests
 from django.views.generic import FormView
 
@@ -34,13 +35,14 @@ class BaseIPCheckView(BaseView, FormView):
 
     @staticmethod
     def create_or_get_cached_result(ip, api_configuration, check_by_user):
+        est = pytz.timezone(settings.TIME_ZONE)
         latest_result = Result.objects.filter(
             address__address=ip.address, api_configuration=api_configuration, checked=True
         ).order_by('-updated_at').first()
         use_cache = True
         result = None
         if latest_result is not None:
-            days_delta = datetime.now().date() - latest_result.created_at.date()
+            days_delta = datetime.now().date() - latest_result.created_at.astimezone(est).date()
             if days_delta.days >= settings.API_CACHE_PERIOD_DAYS:
                 use_cache = False
         else:

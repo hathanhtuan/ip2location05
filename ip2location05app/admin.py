@@ -1,5 +1,7 @@
 from django.contrib import admin
 
+from ip2location05app.models.AccessGroup import AccessGroup
+from ip2location05app.models.AccessRecord import AccessRecord
 from ip2location05app.models.Api3rdParty import Api3rdParty
 from ip2location05app.models.ApiConfiguration import ApiConfiguration
 from ip2location05app.models.Config import Config
@@ -25,3 +27,5 @@ admin.site.register(Api3rdParty)
 admin.site.register(ApiConfiguration)
 admin.site.register(ISP)
 admin.site.register(IPNetwork, IPNetworkAdmin)
+admin.site.register(AccessGroup)
+admin.site.register(AccessRecord)

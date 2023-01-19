@@ -36,34 +36,32 @@
                     <tbody>
 
                     {% for key, value in result_list.items %}
-                        {# key is IPAddress, value.0 is dict{ipv4, list_time}, value.1 is result #}
-                        {% for k, v in value.0.items %}
-                            {% for time in v %}
-                                <tr>
-                                    <td>{% if time == v.0 %}  {% endif %}</td>
-                                    <td>{% if time == v.0 %}
-                                        <a href="{% url 'history_ip' %}?ip={{ key }}">{{ key }}</a> {% endif %}</td>
-                                    <td>
-                                        {{ time |date:"H:i:s m/d/Y" }}
-                                    </td>
-                                    <td>
-                                        {% if time == v.0 %}
-                                            {% if value.1.checked %}
-                                                {{ value.1.response_string | show_country }}
-                                            {% endif %}
+                        {# key is IPAddress, value is access_group #}
+                        {% for time in value.accessrecord_set.all %}
+                            <tr>
+                                <td>{% if time == value.accessrecord_set.all.0 %}  {% endif %}</td>
+                                <td>{% if time == value.accessrecord_set.all.0 %}
+                                    <a href="{% url 'history_ip' %}?ip={{ key }}">{{ key }}</a> {% endif %}</td>
+                                <td>
+                                    {{ time.access_time |date:"H:i:s m/d/Y" }}
+                                </td>
+                                <td>
+                                    {% if time == value.accessrecord_set.all.0 %}
+                                        {% if value.result.checked %}
+                                            {{ value.result.response_string | show_country }}
                                         {% endif %}
-                                    </td>
-                                    <td>
-                                        {% if time == v.0 %}
-                                            {% if value.1.checked %}
-                                                CHECKED
-                                            {% else %}
-                                                <b>Failed</b>
-                                            {% endif %}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if time == value.accessrecord_set.all.0 %}
+                                        {% if value.result.checked %}
+                                            CHECKED
+                                        {% else %}
+                                            <b>Failed</b>
                                         {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                                    {% endif %}
+                                </td>
+                            </tr>
                         {% endfor %}
                     {% endfor %}
 
@@ -85,51 +83,50 @@
                     <tbody>
 
                     {% for key, value in result_list.items %}
-                        {# key is IPAddress, value.0 is dict{ipv4, list_time}, value.1 is result #}
-                        {% for k, v in value.0.items %}
-                            {% for time in v %}
+                        {# key is IPAddress, value is access_group #}
+                        {% for time in value.accessrecord_set.all %}
                                 <tr>
 
 
-{#                                    {% if time == v.0 %}#}
-                                        <td >
-                                            {{ key }}
-                                        </td>
-{#                                    {% endif %}#}
+                                    {#                                    {% if time == v.0 %}#}
                                     <td>
-                                        {{ time |date:"H:i:s m/d/Y" }}
+                                        {{ key }}
                                     </td>
-{#                                    {% if time == v.0 %}#}
-                                        <td >
+                                    {#                                    {% endif %}#}
+                                    <td>
+                                        {{ time.access_time |date:"H:i:s m/d/Y" }}
+                                    </td>
+                                    {#                                    {% if time == v.0 %}#}
+                                    <td>
 
-                                            {% if value.1.checked %}
-                                                {{ value.1.response_string | show_location }}
-                                            {% endif %}
+                                        {% if value.result.checked %}
+                                            {{ value.result.response_string | show_location }}
+                                        {% endif %}
 
-                                        </td>
-{#                                    {% endif %}#}
-{#                                    {% if time == v.0 %}#}
-                                        <td >
+                                    </td>
+                                    {#                                    {% endif %}#}
+                                    {#                                    {% if time == v.0 %}#}
+                                    <td>
 
-                                            {% if value.1.checked %}
-                                                {{ value.1.response_string | show_isp }}
-                                            {% endif %}
+                                        {% if value.result.checked %}
+                                            {{ value.result.response_string | show_isp }}
+                                        {% endif %}
 
-                                        </td>
-{#                                    {% endif %}#}
-{#                                    {% if time == v.0 %}#}
-                                        <td >
+                                    </td>
+                                    {#                                    {% endif %}#}
+                                    {#                                    {% if time == v.0 %}#}
+                                    <td>
 
-                                            {% if value.1.checked %}
-                                                CHECKED
-                                            {% else %}
-                                                <b>Failed</b>
-                                            {% endif %}
+                                        {% if value.result.checked %}
+                                            CHECKED
+                                        {% else %}
+                                            <b>Failed</b>
+                                        {% endif %}
 
-                                        </td>
-{#                                    {% endif %}#}
+                                    </td>
+                                    {#                                    {% endif %}#}
                                 </tr>
-                            {% endfor %}
+
                         {% endfor %}
                     {% endfor %}
 
