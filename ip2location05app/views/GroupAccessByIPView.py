@@ -3,7 +3,8 @@ from abc import abstractmethod
 
 from django.core.exceptions import ValidationError
 from django.db import transaction
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
 from ip2location05app.forms.GroupAccessByIPForm import GroupAccessByIPForm
 from ip2location05app.forms.UploadFileForm import UploadFileForm
@@ -92,13 +93,5 @@ class GroupAccessByIPView(BaseIPCheckView):
                     ag.result = self.check_ip(ag.ip, api_configuration, self.request.user, result=ag.result)
                     ag.result.save()
 
-        context = form.get_context()
-
-        context = {
-            'form': form,
-            'result_list': access_group_list,
-            'view_name': self.view_name,
-            'view': self
-        }
-
-        return render(self.request, 'group_access_by_ip.html', context)
+        # return render(self.request, 'group_access_by_ip.html', context)
+        return redirect(reverse('group_access_result') + '?file_id=' + str(file_input.pk))

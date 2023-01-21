@@ -3,7 +3,9 @@ from django.urls import path
 from ip2location05app.views.CheckSingleIPView import CheckSingleIPView
 from ip2location05app.views.FileHistoryView import FileHistoryView
 from ip2location05app.views.FileSubmitView import FileSubmitView
+from ip2location05app.views.GroupAccessByIPResultView import GroupAccessByIPResultView
 from ip2location05app.views.GroupAccessByIPView import GroupAccessByIPView
+from ip2location05app.views.GroupAccessFileHistoryView import GroupAccessFileHistoryView
 from ip2location05app.views.ResultListView import ResultListView
 from ip2location05app.views.SingleIPHistoryView import SingleIPHistoryView
 from ip2location05app.views.ajax.CheckListIPAjax import CheckListIPAjax
@@ -15,5 +17,7 @@ urlpatterns = [
     path('history_ip', SingleIPHistoryView.as_view(), name='history_ip'),
     path('history_file', FileHistoryView.as_view(), name='history_file'),
     path('group_access', GroupAccessByIPView.as_view(), name='group_access'),
+    path('group_access_result', GroupAccessByIPResultView.as_view(), name='group_access_result'),
+    path('list_group_access_file', GroupAccessFileHistoryView.as_view(), name='group_access_file'),
     path('ajax/chek_ip', CheckListIPAjax.as_view(), name='ajax_check_ip'),
 ]

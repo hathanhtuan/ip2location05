@@ -1,0 +1,174 @@
+{% extends 'base_general.html' %}
+
+{% load static %} {% load sass_tags %} {% load extras %}
+{% block css_block %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/datatables.scss' %}">
+{% endblock %}
+{% block bookmark %}
+    {% include 'include/bookmark_list.html' %}
+{% endblock %}
+{% block page_content %}
+    <div class="row card">
+        <div class="container card-body form-builder">
+            <table id="list_result" class="display" style="width:100%">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>IP</th>
+                    <th>Time</th>
+                    <th>ISP</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for value in object_list %}
+                    {# key is IPAddress, value is access_group #}
+                    {% for time in value.accessrecord_set.all %}
+                        <tr>
+                            <td>{% if time == value.accessrecord_set.all.0 %}  {% endif %}</td>
+                            <td>{% if time == value.accessrecord_set.all.0 %}
+                                <a href="{% url 'history_ip' %}?ip={{ value.ip }}">{{ value.ip }}</a> {% endif %}</td>
+                            <td>
+                                {{ time.access_time |date:"H:i:s m/d/Y" }}
+                            </td>
+                            <td>
+                                {% if time == value.accessrecord_set.all.0 %}
+                                    {% if value.result.checked %}
+                                        {{ value.result.response_string | show_country }}
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if time == value.accessrecord_set.all.0 %}
+                                    {% if value.result.checked %}
+                                        CHECKED
+                                    {% else %}
+                                        <b>Failed</b>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            <table id="hidden_table" class="display" style="visibility: hidden">
+                <thead>
+                <tr>
+
+                    <th>IP</th>
+                    <th>Time</th>
+                    <th>Location</th>
+                    <th>ISP</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for value in object_list %}
+                    {# key is IPAddress, value is access_group #}
+                    {% for time in value.accessrecord_set.all %}
+                        <tr>
+
+
+                            {#                                    {% if time == v.0 %}#}
+                            <td>
+                                {{ value.ip }}
+                            </td>
+                            {#                                    {% endif %}#}
+                            <td>
+                                {{ time.access_time |date:"H:i:s m/d/Y" }}
+                            </td>
+                            {#                                    {% if time == v.0 %}#}
+                            <td>
+
+                                {% if value.result.checked %}
+                                    {{ value.result.response_string | show_location }}
+                                {% endif %}
+
+                            </td>
+                            {#                                    {% endif %}#}
+                            {#                                    {% if time == v.0 %}#}
+                            <td>
+
+                                {% if value.result.checked %}
+                                    {{ value.result.response_string | show_isp }}
+                                {% endif %}
+
+                            </td>
+                            {#                                    {% endif %}#}
+                            {#                                    {% if time == v.0 %}#}
+                            <td>
+
+                                {% if value.result.checked %}
+                                    CHECKED
+                                {% else %}
+                                    <b>Failed</b>
+                                {% endif %}
+
+                            </td>
+                            {#                                    {% endif %}#}
+                        </tr>
+
+                    {% endfor %}
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+{% block plugin_js_block %}
+    {{ block.super }}
+    <script src="{% static 'assets/js/script.js' %}"></script>
+    <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/js/datatable/datatables/datatable.custom.js' %}"></script>
+    <script src="{% static 'assets/js/sheetjs.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.table2excel.js' %}"></script>
+{% endblock %}
+{% block page_js %}
+    {{ block.super }}
+    <script>
+
+
+        $(document).ready(function () {
+            t = $('#list_result').DataTable({
+                paging: false,
+                columnDefs: [
+                    {
+                        searchable: false,
+                        orderable: false,
+                        targets: 0,
+                    },
+                ],
+                "columns": [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                ],
+                order: [[0, 'desc']],
+            });
+            t.on('order.dt search.dt', function () {
+                let i = 1;
+
+                t.cells(null, 0, {search: 'applied', order: 'applied'}).every(function (cell) {
+                    this.data(i++);
+                });
+            }).draw();
+
+            // filter_type_check($('input[name="filter_type"]').val());
+        });
+
+
+    </script>
+    {% include 'include/script/script_export_to_excel.html' with table_id='list_result' %}
+{% endblock %}
