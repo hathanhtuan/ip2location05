@@ -94,4 +94,4 @@ class GroupAccessByIPView(BaseIPCheckView):
                     ag.result.save()
 
         # return render(self.request, 'group_access_by_ip.html', context)
-        return redirect(reverse('group_access_result') + '?file_id=' + str(file_input.pk))
+        return redirect(reverse('group_access_result') + '?file=' + str(file_input.pk))

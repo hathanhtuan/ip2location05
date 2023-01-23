@@ -8,13 +8,12 @@ class GroupAccessFileHistoryView(HistoryView):
     model = FileInput
     paginate_by = 200
     template_name = 'list_file.html'
-    view_name = 'Group Access IP File History - need a distinct query,' \
-                ' this demo site is backed by sqlite so it is impossible'
+    view_name = 'Group Access IP File History'
     url_path = reverse_lazy('group_access_result')
 
     def get_queryset(self):
         return FileInput.objects.filter(
             created_by=self.request.user,
             accessgroup__isnull=False
-        ).order_by('-created_at')
+        ).distinct('pk')
 

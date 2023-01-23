@@ -29,7 +29,7 @@
                         <td>{{ result.pk }}</td>
                         <td><a href="{% url 'history_ip' %}?ip={{ result.address }}">{{ result.address }}</a></td>
                         <td>{{ result.api_configuration }}</td>
-                        <td>{{ result.created_at }}</td>
+                        <td>{{ result.created_at |date:"H:i:s m/d/Y" }}</td>
                         <td>
                             <span id="result_text_{{ result.pk }}">{{ result.response_string | show_country }}</span>
                         </td>

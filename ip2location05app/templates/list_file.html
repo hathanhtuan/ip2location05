@@ -25,7 +25,7 @@
                     <tr>
                         <td>{{ file.pk }}</td>
                         <td><a href="{{ view.url_path }}?file={{ file.pk }}">{{ file.file_name }}</a></td>
-                        <td>{{ file.created_at }}</td>
+                        <td>{{ file.created_at |date:"H:i:s m/d/Y" }}</td>
                     </tr>
                 {% endfor %}
 
