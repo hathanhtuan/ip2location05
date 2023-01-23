@@ -4,42 +4,71 @@
 {#        <span>Thống kê số liệu</span>#}
 {#    </a>#}
 {#</li>#}
-
 <li class="dropdown">
-    <a class="nav-link menu-title" href="{% url 'file_submit' %}">
-        <i data-feather="file-text"></i>
-        <span>Upload file contains IPs</span>
+    <a class="nav-link menu-title" href="javascript:void(0)">
+        <span>Check IPs</span>
+        <div class="according-menu"><i class="fa "></i></div>
     </a>
+    <ul class="nav-submenu menu-content" style="display: block;">
+        <li><a href="{% url 'file_submit' %}">Upload file contains IPs</a></li>
+        <li><a href="{% url 'single_ip_submit' %}">Check Single IP</a></li>
+    </ul>
 </li>
 <li class="dropdown">
-    <a class="nav-link menu-title" href="{% url 'single_ip_submit' %}">
-        <i data-feather="search"></i>
-        <span>Check Single IP</span>
+    <a class="nav-link menu-title" href="javascript:void(0)">
+        <span>Check History</span>
+        <div class="according-menu"><i class="fa "></i></div>
     </a>
+    <ul class="nav-submenu menu-content" style="display: block;">
+        <li><a href="{% url 'history_ip' %}">IP History</a></li>
+        <li><a href="{% url 'history_file' %}">File History</a></li>
+    </ul>
 </li>
 <li class="dropdown">
-    <a class="nav-link menu-title" href="{% url 'history_ip' %}">
-        <i data-feather="info"></i>
-        <span>IP History</span>
+    <a class="nav-link menu-title" href="javascript:void(0)">
+        <span>Group Access</span>
+        <div class="according-menu"><i class="fa "></i></div>
     </a>
+    <ul class="nav-submenu menu-content" style="display: block;">
+        <li><a href="{% url 'group_access' %}">Group Access Log</a></li>
+        <li><a href="{% url 'group_access_file' %}">Group Access File Log</a></li>
+    </ul>
 </li>
-<li class="dropdown">
-    <a class="nav-link menu-title" href="{% url 'history_file' %}">
-        <i data-feather="info"></i>
-        <span>File History</span>
-    </a>
-</li>
-<li class="dropdown">
-    <a class="nav-link menu-title" href="{% url 'group_access' %}">
-        <i data-feather="info"></i>
-        <span>Group Access Log</span>
-    </a>
-</li>
-<li class="dropdown">
-    <a class="nav-link menu-title" href="{% url 'group_access_file' %}">
-        <i data-feather="info"></i>
-        <span>Group Access File Log</span>
-    </a>
-</li>
-
+{#<li class="dropdown">#}
+{#    <a class="nav-link menu-title" href="{% url 'file_submit' %}">#}
+{#        <i data-feather="file-text"></i>#}
+{#        <span>Upload file contains IPs</span>#}
+{#    </a>#}
+{#</li>#}
+{#<li class="dropdown">#}
+{#    <a class="nav-link menu-title" href="{% url 'single_ip_submit' %}">#}
+{#        <i data-feather="search"></i>#}
+{#        <span>Check Single IP</span>#}
+{#    </a>#}
+{#</li>#}
+{#<li class="dropdown">#}
+{#    <a class="nav-link menu-title" href="{% url 'history_ip' %}">#}
+{#        <i data-feather="info"></i>#}
+{#        <span>IP History</span>#}
+{#    </a>#}
+{#</li>#}
+{#<li class="dropdown">#}
+{#    <a class="nav-link menu-title" href="{% url 'history_file' %}">#}
+{#        <i data-feather="info"></i>#}
+{#        <span>File History</span>#}
+{#    </a>#}
+{#</li>#}
+{#<li class="dropdown">#}
+{#    <a class="nav-link menu-title" href="{% url 'group_access' %}">#}
+{#        <i data-feather="info"></i>#}
+{#        <span>Group Access Log</span>#}
+{#    </a>#}
+{#</li>#}
+{#<li class="dropdown">#}
+{#    <a class="nav-link menu-title" href="{% url 'group_access_file' %}">#}
+{#        <i data-feather="info"></i>#}
+{#        <span>Group Access File Log</span>#}
+{#    </a>#}
+{#</li>#}
+{##}
 

@@ -145,7 +145,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': 'C:\\Users\\ADMIN\\Documents\\web\\logs\\ip2location\\access.log',
+            'filename': 'E:\\web\\logs\\ip2location\\access.log',
             'when': 'midnight',
             'formatter': 'verbose',
         },
