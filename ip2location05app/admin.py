@@ -9,6 +9,7 @@ from ip2location05app.models.FileInput import FileInput
 from ip2location05app.models.IPAddress import IPAddress
 from ip2location05app.models.IPNetwork import IPNetwork
 from ip2location05app.models.ISP import ISP
+from ip2location05app.models.LogParserModel import LogParserModel
 from ip2location05app.models.Result import Result
 
 # Register your models here.
@@ -29,3 +30,4 @@ admin.site.register(ISP)
 admin.site.register(IPNetwork, IPNetworkAdmin)
 admin.site.register(AccessGroup)
 admin.site.register(AccessRecord)
+admin.site.register(LogParserModel)

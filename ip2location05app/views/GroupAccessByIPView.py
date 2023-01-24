@@ -1,21 +1,21 @@
+import importlib
 import ipaddress
+import logging
 from abc import abstractmethod
+from datetime import datetime
 
-from django.core.exceptions import ValidationError
 from django.db import transaction
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse
 
 from ip2location05app.forms.GroupAccessByIPForm import GroupAccessByIPForm
-from ip2location05app.forms.UploadFileForm import UploadFileForm
 from ip2location05app.models.AccessGroup import AccessGroup
 from ip2location05app.models.AccessRecord import AccessRecord
 from ip2location05app.models.FileInput import FileInput
 from ip2location05app.models.IPAddress import IPAddress
-from ip2location05app.models.Result import Result
 from ip2location05app.views.BaseIPCheckView import BaseIPCheckView
-from datetime import datetime
 
+logger = logging.getLogger(__name__)
 
 # class AccessGroup:
 #     ipaddress = None
@@ -50,8 +50,21 @@ class ZaloLogParser(LogParser):
         return access_record
 
 
+def str_to_class(module_name, class_name):
+    """Return a class instance from a string reference"""
+    try:
+        module_ = importlib.import_module(module_name)
+        try:
+            class_ = getattr(module_, class_name)
+        except AttributeError:
+            logger.error('Class does not exist')
+    except ImportError:
+        logger.error('Module does not exist')
+    return class_ or None
+
+
 class GroupAccessByIPView(BaseIPCheckView):
-    form_class = UploadFileForm
+    form_class = GroupAccessByIPForm
     template_name = 'group_access_by_ip.html'
     view_name = 'Group Access By IP'
 
@@ -59,7 +72,13 @@ class GroupAccessByIPView(BaseIPCheckView):
         files = self.request.FILES.getlist('ip_list_file')
         file_input = None
         api_configuration = form.cleaned_data['api_configuration']
-        log_parser = ZaloLogParser()
+        log_parser_model = form.cleaned_data['log_parser']
+        log_parser = None
+        class_ = str_to_class(log_parser_model.module_path, log_parser_model.class_name)
+        if class_:
+            log_parser = class_()
+        else:
+            raise ImportError('Class not found')
         access_group_list = {}
         with transaction.atomic():
             for f in files:
