@@ -1,0 +1,27 @@
+<script>
+    $(document).ready(function () {
+
+            t = $('#{{table_id | default:'list_result'}}').DataTable({
+                paging: false,
+                searching: false,
+                info: false,
+                columnDefs: [
+                    {
+                        searchable: false,
+                        orderable: false,
+                        targets: 0,
+                    },
+                ],
+                order: [[0, 'desc']],
+            });
+            t.on('order.dt search.dt', function () {
+                let i = ({{ page_obj.number }} - 1) * {% if request.GET.per_page %}{{ request.GET.per_page }}{% else %}{{ view.paginate_by }} {% endif %} + 1;
+
+                t.cells(null, 0, {search: 'applied', order: 'applied'}).every(function (cell) {
+                    this.data(i++);
+                });
+            }).draw();
+
+            // filter_type_check($('input[name="filter_type"]').val());
+        });
+</script>

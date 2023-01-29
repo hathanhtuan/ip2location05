@@ -4,7 +4,6 @@ from ip2location05app.views.HistoryView import HistoryView
 
 class SingleIPHistoryView(HistoryView):
     model = Result
-    paginate_by = 200
     template_name = 'list_result.html'
     view_name = 'IP history check'
 

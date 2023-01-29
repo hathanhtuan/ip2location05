@@ -6,7 +6,6 @@ from ip2location05app.views.HistoryView import HistoryView
 
 class GroupAccessFileHistoryView(HistoryView):
     model = FileInput
-    paginate_by = 200
     template_name = 'list_file.html'
     view_name = 'Group Access IP File History'
     url_path = reverse_lazy('group_access_result')

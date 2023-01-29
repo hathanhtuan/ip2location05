@@ -1,0 +1,12 @@
+<script>
+    function handle_recheck_ip(result) {
+        var returned_data = result[0];
+        if (returned_data.status === 'CHECKED') {
+            $("#result_status_" + returned_data.result_id).html("CHECKED");
+            $("#result_text_" + returned_data.result_id).html(returned_data.display_result);
+        } else {
+            alert("recheck failed!");
+        }
+    }
+
+</script>

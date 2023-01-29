@@ -57,6 +57,6 @@ class FileSubmitView(BaseIPCheckView):
                 if not result.checked:
                     result = self.check_ip(result.address, api_configuration, self.request.user, result)
                     result.save()
-            return redirect(reverse('result_list') + '?file_id=' + str(file_input.pk))
+            return redirect(reverse('history_ip') + '?file=' + str(file_input.pk))
         else:
-            return redirect('result_list')
+            return redirect('history_ip')

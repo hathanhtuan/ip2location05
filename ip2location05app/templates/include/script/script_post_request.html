@@ -1,6 +1,6 @@
 
-
-    function {{ function_signature }}{
+<script>
+        function {{ function_signature }}{
         $.ajax({
             url: '{% url request_path %}',
             type: 'POST',
@@ -11,4 +11,6 @@
             }
         });
     }
+</script>
+
 

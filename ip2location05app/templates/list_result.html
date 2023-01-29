@@ -49,6 +49,7 @@
                 </tbody>
 
             </table>
+        {% include 'include/table_paging.html' %}
         </div>
     </div>
 
@@ -62,54 +63,9 @@
 {% endblock %}
 {% block page_js %}
     {{ block.super }}
-    <script>
-
-
-        $(document).ready(function () {
-
-            t = $('#list_result').DataTable({
-                columnDefs: [
-                    {
-                        searchable: false,
-                        orderable: false,
-                        targets: 0,
-                    },
-                ],
-                "columns": [
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                ],
-                order: [[0, 'desc']],
-            });
-            t.on('order.dt search.dt', function () {
-                let i = 1;
-
-                t.cells(null, 0, {search: 'applied', order: 'applied'}).every(function (cell) {
-                    this.data(i++);
-                });
-            }).draw();
-
-            // filter_type_check($('input[name="filter_type"]').val());
-        });
-
-
-        {% include 'include/script/script_post_request.html' with function_signature='check_ip(result_id)' request_path='ajax_check_ip' request_key='result_id' request_data='result_id' handle_success='handle_recheck_ip'%}
-
-        function handle_recheck_ip(result){
-            var returned_data = result[0];
-            if(returned_data.status === 'CHECKED'){
-                $("#result_status_" + returned_data.result_id).html("CHECKED");
-                $("#result_text_" + returned_data.result_id).html(returned_data.display_result);
-            }
-            else {
-                alert("recheck failed!");
-            }
-        }
-
-    </script>
+    {% include 'include/script/script_init_table.html' %}
+    {% include 'include/script/script_handle_recheck_ip.html' %}
     {% include 'include/script/script_export_to_excel.html' with table_id='list_result' %}
+    {% include 'include/script/script_table_paging.html' %}
+    {% include 'include/script/script_post_request.html' with function_signature='check_ip(result_id)' request_path='ajax_check_ip' request_key='result_id' request_data='result_id' handle_success='handle_recheck_ip'%}
 {% endblock %}

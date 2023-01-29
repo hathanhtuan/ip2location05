@@ -185,7 +185,7 @@
         });
 
 
-        {% include 'include/script/script_post_request.html' with function_signature='check_ip(result_id)' request_path='ajax_check_ip' request_key='result_id' request_data='result_id' handle_success='handle_recheck_ip'%}
+
 
         function handle_recheck_ip(result) {
             var returned_data = result[0];
@@ -198,5 +198,6 @@
         }
 
     </script>
+    {% include 'include/script/script_post_request.html' with function_signature='check_ip(result_id)' request_path='ajax_check_ip' request_key='result_id' request_data='result_id' handle_success='handle_recheck_ip'%}
     {% include 'include/script/script_export_to_excel.html' with table_id='hidden_table' %}
 {% endblock %}

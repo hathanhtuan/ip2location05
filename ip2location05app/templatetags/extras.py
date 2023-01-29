@@ -73,3 +73,30 @@ def show_all_dict(response_string):
             display_string += '<p>{key}: <b>{value}</b></p>'.format(key=key, value=result[key])
     return mark_safe(display_string)
 
+
+@register.filter
+def show_per_page(current_page, request):
+    per_page = request.GET.get('per_page', '')
+    return_string = ''
+    per_page_found = False
+    for param, value in request.GET.items():
+        if param != 'page' and param != 'per_page':
+            return_string += '&{}={}'.format(param, value)
+        if param == 'per_page':
+            per_page_found = True
+    if per_page_found:
+        return return_string + '&page={}&per_page={}'.format(current_page, per_page)
+    else:
+        return return_string + '&page={}'.format(current_page)
+
+
+@register.filter
+def show_records_per_page_selection(total_record, request):
+    per_page = request.GET.get('per_page', '')
+    if per_page:
+        per_page = int(per_page)
+        if total_record == per_page:
+            return 'selected'
+
+        return ''
+

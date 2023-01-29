@@ -1,0 +1,21 @@
+<script>
+    function per_page_change() {
+        var selected_value = $("#records_per_page").val();
+        url = window.location.href;
+        url = replaceUrlParam(url, "page", 1);
+        url = replaceUrlParam(url, "per_page", selected_value);
+        window.location.href = url;
+    }
+
+    function replaceUrlParam(url, paramName, paramValue) {
+        if (paramValue == null) {
+            paramValue = '';
+        }
+        var pattern = new RegExp('\\b(' + paramName + '=).*?(&|#|$)');
+        if (url.search(pattern) >= 0) {
+            return url.replace(pattern, '$1' + paramValue + '$2');
+        }
+        url = url.replace(/[?#]$/, '');
+        return url + (url.indexOf('?') > 0 ? '&' : '?') + paramName + '=' + paramValue;
+    }
+</script>

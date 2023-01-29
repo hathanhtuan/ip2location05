@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
 
-                {% for value in object_list %}
+                {% for value in page_obj %}
                     {# key is IPAddress, value is access_group #}
                     {% for time in value.accessrecord_set.all %}
                         <tr>
@@ -56,7 +56,7 @@
                 </tbody>
 
             </table>
-
+            {% include 'include/table_paging.html' %}
             <table id="hidden_table" class="display" style="visibility: hidden">
                 <thead>
                 <tr>
@@ -70,7 +70,7 @@
                 </thead>
                 <tbody>
 
-                {% for value in object_list %}
+                {% for value in page_obj %}
                     {# key is IPAddress, value is access_group #}
                     {% for time in value.accessrecord_set.all %}
                         <tr>
@@ -121,6 +121,7 @@
                 </tbody>
 
             </table>
+
         </div>
     </div>
 
@@ -135,40 +136,8 @@
 {% endblock %}
 {% block page_js %}
     {{ block.super }}
-    <script>
-
-
-        $(document).ready(function () {
-            t = $('#list_result').DataTable({
-                paging: false,
-                columnDefs: [
-                    {
-                        searchable: false,
-                        orderable: false,
-                        targets: 0,
-                    },
-                ],
-                "columns": [
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                ],
-                order: [[0, 'desc']],
-            });
-            t.on('order.dt search.dt', function () {
-                let i = 1;
-
-                t.cells(null, 0, {search: 'applied', order: 'applied'}).every(function (cell) {
-                    this.data(i++);
-                });
-            }).draw();
-
-            // filter_type_check($('input[name="filter_type"]').val());
-        });
-
-
-    </script>
+    {% include 'include/script/script_init_table.html' %}
+    {% include 'include/script/script_handle_recheck_ip.html' %}
+    {% include 'include/script/script_table_paging.html' %}
     {% include 'include/script/script_export_to_excel.html' with table_id='hidden_table' %}
 {% endblock %}
