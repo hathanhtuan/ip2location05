@@ -34,18 +34,19 @@ class FileSubmitView(BaseIPCheckView):
                 file_input = FileInput.objects.create(file_name=file_name, created_by=self.request.user)
                 file_input.save()
                 for line in f:
-                    line = line.rstrip().decode("utf-8")
-                    ipt = str(line)
-                    if not self.is_valid_ipaddress(ipt):
-                        raise ValidationError('IP Address is not valid {}'.format(ipt))
-                    if IPAddress.objects.filter(address=ipt).exists():
-                        ip = IPAddress.objects.filter(address=ipt).first()
-                    else:
-                        ip = IPAddress.objects.create(address=ipt)
-                    ip.save()
-                    ip_addresses.append(ip)
-                    file_input.addresses.add(ip)
-                    file_input.save()
+                    strip_line = line.rstrip().decode("utf-8")
+                    if strip_line:
+                        ipt = str(strip_line)
+                        if not self.is_valid_ipaddress(ipt):
+                            raise ValidationError('IP Address is not valid {}'.format(ipt))
+                        if IPAddress.objects.filter(address=ipt).exists():
+                            ip = IPAddress.objects.filter(address=ipt).first()
+                        else:
+                            ip = IPAddress.objects.create(address=ipt)
+                        ip.save()
+                        ip_addresses.append(ip)
+                        file_input.addresses.add(ip)
+                        file_input.save()
         api_configuration = form.cleaned_data['api_configuration']
         if file_input and api_configuration:
             for ip in ip_addresses:
