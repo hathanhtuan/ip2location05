@@ -86,7 +86,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'postgrespw',
         'HOST': '127.0.0.1',
-        'PORT': '49153',
+        'PORT': '32768',
     }
 }
 
@@ -139,7 +139,8 @@ STATIC_URL = 'static/'
 
 SASS_PROCESSOR_ROOT = BASE_DIR / 'static'
 
-LOGIN_REDIRECT_URL = "/app/upload"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

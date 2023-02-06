@@ -1,0 +1,30 @@
+<li class="dropdown">
+    <a class="nav-link menu-title" href="javascript:void(0)">
+        <span>Check IPs</span>
+        <div class="according-menu"><i class="fa "></i></div>
+    </a>
+    <ul class="nav-submenu menu-content" style="display: block;">
+        <li><a href="{% url 'file_submit' %}">Upload file contains IPs</a></li>
+        <li><a href="{% url 'single_ip_submit' %}">Check Single IP</a></li>
+    </ul>
+</li>
+<li class="dropdown">
+    <a class="nav-link menu-title" href="javascript:void(0)">
+        <span>Check History</span>
+        <div class="according-menu"><i class="fa "></i></div>
+    </a>
+    <ul class="nav-submenu menu-content" style="display: block;">
+        <li><a href="{% url 'history_ip' %}">IP History</a></li>
+        <li><a href="{% url 'history_file' %}">File History</a></li>
+    </ul>
+</li>
+<li class="dropdown">
+    <a class="nav-link menu-title" href="javascript:void(0)">
+        <span>Group Access</span>
+        <div class="according-menu"><i class="fa "></i></div>
+    </a>
+    <ul class="nav-submenu menu-content" style="display: block;">
+        <li><a href="{% url 'group_access' %}">Group Access Log</a></li>
+        <li><a href="{% url 'group_access_file' %}">Group Access File Log</a></li>
+    </ul>
+</li>
