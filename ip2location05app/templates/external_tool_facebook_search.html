@@ -1,0 +1,19 @@
+{% extends 'external_tool.html' %}
+{% load static %} {% load sass_tags %} {% load extras %}
+
+    {% block script_launch_external_tool_check %}
+        <script>
+            function launch_check() {
+                $("input[name='api_configuration']:checked").each(function (index, obj) {
+                    var link = links[obj.value].replace("{input}", $("input[name='input']").val());
+                    link = link.replace(
+                        "{filters}",
+                        btoa('{"rp_author":"{\\\"name\\\":\\\"author\\\",\\\"args\\\":\\\"' + $("#id_fb_id").val() + '\\\"}"}')
+                    );
+                    // alert(link);
+                    window.open(link, '_blank');
+                });
+            }
+        </script>
+    {% endblock %}
+

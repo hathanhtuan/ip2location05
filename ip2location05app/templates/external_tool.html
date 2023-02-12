@@ -21,22 +21,28 @@
 {% endblock %}
 
 {% block page_js %}
+    {% block script_declare_apis %}
+        <script>
+            links = {
+                {% autoescape off %}
+                    {% for choice in choices %}
+                        "{{ choice.id }}": "{{ choice.api_3rd_party.api_source }}{{ choice.params }}",
+                    {% endfor %}
+                {% endautoescape %}
+            };
+        </script>
+    {% endblock %}
+    {% block script_launch_external_tool_check %}
+        <script>
+            function launch_check() {
+                $("input[name='api_configuration']:checked").each(function (index, obj) {
+                    var link = links[obj.value].replace("{input}", $("input[name='input']").val());
+                    window.open(link, '_blank');
+                });
+            }
+        </script>
+    {% endblock %}
     <script>
-        links = {
-            {% autoescape off %}
-                {% for choice in choices %}
-                    "{{ choice.id }}": "{{ choice.api_3rd_party.api_source }}{{ choice.params }}",
-                {% endfor %}
-            {% endautoescape %}
-        };
-
-        function launch_check() {
-            $("input[name='api_configuration']:checked").each(function (index, obj) {
-                var link = links[obj.value].replace("{input}", $("input[name='input']").val());
-                window.open(link, '_blank');
-            });
-        }
-
         function select_all() {
             $("input[name='api_configuration']").attr("checked", true);
         }

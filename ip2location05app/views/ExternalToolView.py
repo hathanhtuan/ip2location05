@@ -9,8 +9,14 @@ class ExternalToolView(PublicView, FormView):
     template_name = 'external_tool.html'
     form_class = ExternalToolForm
 
+    def get_tool_type(self):
+        if 'type' in self.request.GET:
+            return self.request.GET['type']
+        else:
+            return None
+
     def get_form(self, *args, **kwargs):
-        tool_type = self.request.GET['type']
+        tool_type = self.get_tool_type()
         form = super().get_form(*args, **kwargs)
         form.fields['api_configuration'].queryset = ApiConfiguration.objects.filter(
             api_config_type=tool_type
@@ -19,9 +25,12 @@ class ExternalToolView(PublicView, FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['choices'] = ApiConfiguration.objects.filter(
-            api_config_type=self.request.GET['type']
-        )
+        if self.get_tool_type():
+            context['choices'] = ApiConfiguration.objects.filter(
+                api_config_type=self.get_tool_type()
+            )
+        else:
+            context['choices'] = ApiConfiguration.objects.none()
         return context
 
 
