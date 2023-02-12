@@ -69,6 +69,14 @@ def model_choice_field_multiple(label, queryset, initial=0, required=True):
                                           )
 
 
+def model_choice_field_multiple_checkbox(label, queryset, initial=0, required=True):
+    return forms.ModelMultipleChoiceField(label=label,
+                                          widget=forms.CheckboxSelectMultiple,
+                                          queryset=queryset,
+                                          required=required
+                                          )
+
+
 def radio_field(label, initial, required=True, choices=[], onchange=''):
     return forms.ChoiceField(
         label=label,

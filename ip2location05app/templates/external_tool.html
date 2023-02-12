@@ -1,0 +1,44 @@
+{% extends 'base_general.html' %}
+{% load static %} {% load sass_tags %} {% load extras %}
+{% block css_block %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/select2.scss' %}">
+{% endblock %}
+
+{% block page_content %}
+    <p>Remember to allow Popup</p>
+    <!-- Using the formset -->
+    {{ form.as_p }}
+    <input type="button" value="Select All" onclick="select_all()">
+    <input type="submit" value="Check" onclick="launch_check()">
+
+
+{% endblock %}
+{% block plugin_js_block %}
+    {{ block.super }}
+    <script src="{% static 'assets/js/select2/select2.full.min.js' %}"></script>
+    <script src="{% static 'assets/js/select2/select2-custom.js' %}"></script>
+{% endblock %}
+
+{% block page_js %}
+    <script>
+        links = {
+            {% autoescape off %}
+                {% for choice in choices %}
+                    "{{ choice.id }}": "{{ choice.api_3rd_party.api_source }}{{ choice.params }}",
+                {% endfor %}
+            {% endautoescape %}
+        };
+
+        function launch_check() {
+            $("input[name='api_configuration']:checked").each(function (index, obj) {
+                var link = links[obj.value].replace("{input}", $("input[name='input']").val());
+                window.open(link, '_blank');
+            });
+        }
+
+        function select_all() {
+            $("input[name='api_configuration']").attr("checked", true);
+        }
+    </script>
+{% endblock %}

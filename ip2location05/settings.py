@@ -181,3 +181,5 @@ LOGGING = {
     },
 }
 
+# Custom settings
+DEFAULT_IP2LOCATION_TYPE_TEXT = 'ip_to_location'

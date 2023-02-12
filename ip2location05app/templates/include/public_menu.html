@@ -1,23 +1,9 @@
 <li class="dropdown">
     <a class="nav-link menu-title" href="javascript:void(0)">
-        <span>Facebook Tools</span>
+        <span>External Tools</span>
         <div class="according-menu"><i class="fa "></i></div>
     </a>
     <ul class="nav-submenu menu-content" style="display: block;">
-        <li><a target="_blank" href="https://lookup-id.com/">Facebook ID</a></li>
-        <li><a target="_blank" href="https://tracuusodienthoai.com/cong-cu/tim-facebook-bang-so-dien-thoai">Phone to FB</a></li>
-        <li><a target="_blank" href="https://tracuusodienthoai.com/cong-cu/tim-sdt-tu-link-facebook">FB to Phone</a></li>
-    </ul>
-</li>
-<li class="dropdown">
-    <a class="nav-link menu-title" href="javascript:void(0)">
-        <span>Website Tools</span>
-        <div class="according-menu"><i class="fa "></i></div>
-    </a>
-    <ul class="nav-submenu menu-content" style="display: block;">
-        <li><a target="_blank" href="https://whois.domaintools.com/">DomainTools</a></li>
-        <li><a target="_blank" href="https://otx.alienvault.com/">Alien Vault</a></li>
-        <li><a target="_blank" href="https://shodan.io/">Shodan</a></li>
-        <li><a target="_blank" href="https://www.vnnic.vn/whois-information">Whois (VN sites)</a></li>
+        <li><a href="{% url 'external_tool'%}?type=external_domain">Domain</a></li>
     </ul>
 </li>
